@@ -30,8 +30,8 @@ public class UserMealsUtil {
 
     public static List<UserMealWithExceed> getFilteredWithExceeded( List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay ) {
 
-        return getByCycles( mealList, startTime, endTime, caloriesPerDay );
-//        return getByRecursion( mealList, startTime, endTime, caloriesPerDay );
+//        return getByCycles( mealList, startTime, endTime, caloriesPerDay );
+        return getByRecursion( mealList, startTime, endTime, caloriesPerDay );
 //        return getByStreamAPI( mealList, startTime, endTime, caloriesPerDay );
     }
 
@@ -39,7 +39,7 @@ public class UserMealsUtil {
     public static List<UserMealWithExceed> getByCycles( List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay ) {
         List<UserMealWithExceed> result = new ArrayList<>();
 
-        HashMap<LocalDate, Integer> mealsPerDayMap = new HashMap<>();
+        Map<LocalDate, Integer> mealsPerDayMap = new HashMap<>();
         for ( UserMeal o : mealList ) {
             LocalDate oDate = o.getDateTime().toLocalDate();
             int calories = o.getCalories();
@@ -49,7 +49,7 @@ public class UserMealsUtil {
             mealsPerDayMap.put( oDate, calories );
         }
 
-        HashMap<LocalDate, Boolean> mealsExceededPerDayMap = new HashMap<>();
+        Map<LocalDate, Boolean> mealsExceededPerDayMap = new HashMap<>();
         for ( Map.Entry<LocalDate, Integer> map : mealsPerDayMap.entrySet() ) {
             if ( map.getValue() > caloriesPerDay ) {
                 mealsExceededPerDayMap.put( map.getKey(), true );
@@ -70,29 +70,44 @@ public class UserMealsUtil {
     public static List<UserMealWithExceed> getByRecursion( List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay ) {
         List<UserMealWithExceed> result = new ArrayList<>();
 
-        int caloriesToday = sumCalories( mealList );
-        boolean isExceeded = caloriesToday > caloriesPerDay;
+        Map<LocalDate, Integer> mealsPerDayMap = new HashMap<>();
+        mealsPerDayMap = sumCaloriesPerDay( mealList, mealsPerDayMap );
+
+        Map<LocalDate, Boolean> mealsExceededPerDayMap = new HashMap<>();
+        for ( Map.Entry<LocalDate, Integer> map : mealsPerDayMap.entrySet() ) {
+            if ( map.getValue() > caloriesPerDay ) {
+                mealsExceededPerDayMap.put( map.getKey(), true );
+            } else {
+                mealsExceededPerDayMap.put( map.getKey(), false );
+            }
+        }
 
         for ( UserMeal o : mealList ) {
             if ( startTime.isBefore( o.getDateTime().toLocalTime() ) && endTime.isAfter( o.getDateTime().toLocalTime() ) ) {
-                result.add( new UserMealWithExceed( o, isExceeded ) );
+                result.add( new UserMealWithExceed( o, mealsExceededPerDayMap.get( o.getDateTime().toLocalDate() ) ) );
             }
-            caloriesToday += o.getCalories();
         }
-        return result;
 
+        return result;
     }
 
-    public static int sumCalories( List<UserMeal> userMeals ) {
+    public static Map<LocalDate, Integer> sumCaloriesPerDay( List<UserMeal> userMeals, Map<LocalDate, Integer> mealsPerDayMap ) {
+        int calories = userMeals.get( 0 ).getCalories();
+        LocalDate currentDate = userMeals.get( 0 ).getDateTime().toLocalDate();
+
         if ( userMeals.size() > 1 ) {
-            return userMeals.get( 0 ).getCalories() + sumCalories( userMeals.subList( 1, userMeals.size() ) );
-        } else {
-            return userMeals.get( 0 ).getCalories();
+            Map<LocalDate, Integer> calloriesAtDay = sumCaloriesPerDay( userMeals.subList( 1, userMeals.size() ), mealsPerDayMap );
+            if ( calloriesAtDay.containsKey( currentDate ) ) {
+                calories += calloriesAtDay.get( currentDate );
+            }
         }
+        mealsPerDayMap.put( currentDate, calories );
+        return mealsPerDayMap;
     }
 
     public static List<UserMealWithExceed> getByStreamAPI( List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay ) {
         List<UserMealWithExceed> result = new ArrayList<>();
+
         return result;
     }
 
