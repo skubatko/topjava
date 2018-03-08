@@ -18,6 +18,10 @@ public class MealWithExceed {
         this.exceed = exceed;
     }
 
+    public boolean isExceed() {
+        return exceed;
+    }
+
     @Override
     public String toString() {
         return "UserMealWithExceed{" +
