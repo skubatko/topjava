@@ -1,26 +1,26 @@
 package ru.javawebinar.topjava.model;
 
+import ru.javawebinar.topjava.model.AbstractNamedEntity;
+import ru.javawebinar.topjava.to.MealWithExceed;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class Meal {
+public class Meal extends AbstractNamedEntity {
     private Integer id;
 
     private final LocalDateTime dateTime;
 
-    private final String description;
-
     private final int calories;
 
-    public Meal(LocalDateTime dateTime, String description, int calories) {
-        this(null, dateTime, description, calories);
+    public Meal( LocalDateTime dateTime, String description, int calories ) {
+        this( null, dateTime, description, calories );
     }
 
-    public Meal(Integer id, LocalDateTime dateTime, String description, int calories) {
-        this.id = id;
+    public Meal( Integer id, LocalDateTime dateTime, String description, int calories ) {
+        super( id, description );
         this.dateTime = dateTime;
-        this.description = description;
         this.calories = calories;
     }
 
@@ -28,7 +28,7 @@ public class Meal {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId( Integer id ) {
         this.id = id;
     }
 
@@ -37,7 +37,7 @@ public class Meal {
     }
 
     public String getDescription() {
-        return description;
+        return getName();
     }
 
     public int getCalories() {
@@ -61,7 +61,7 @@ public class Meal {
         return "Meal{" +
                 "id=" + id +
                 ", dateTime=" + dateTime +
-                ", description='" + description + '\'' +
+                ", description='" + getName() + '\'' +
                 ", calories=" + calories +
                 '}';
     }

@@ -20,12 +20,16 @@ public class User extends AbstractNamedEntity {
 
     private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
 
-    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
-        this(id, name, email, password, DEFAULT_CALORIES_PER_DAY, true, EnumSet.of(role, roles));
+    public User( String name, String email, String password, Role role, Role... roles ) {
+        this( null, name, email, password, DEFAULT_CALORIES_PER_DAY, true, EnumSet.of( role, roles ) );
     }
 
-    public User(Integer id, String name, String email, String password, int caloriesPerDay, boolean enabled, Set<Role> roles) {
-        super(id, name);
+    public User( Integer id, String name, String email, String password, Role role, Role... roles ) {
+        this( id, name, email, password, DEFAULT_CALORIES_PER_DAY, true, EnumSet.of( role, roles ) );
+    }
+
+    public User( Integer id, String name, String email, String password, int caloriesPerDay, boolean enabled, Set<Role> roles ) {
+        super( id, name );
         this.email = email;
         this.password = password;
         this.caloriesPerDay = caloriesPerDay;
@@ -37,11 +41,11 @@ public class User extends AbstractNamedEntity {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail( String email ) {
         this.email = email;
     }
 
-    public void setPassword(String password) {
+    public void setPassword( String password ) {
         this.password = password;
     }
 
@@ -49,11 +53,11 @@ public class User extends AbstractNamedEntity {
         return registered;
     }
 
-    public void setRegistered(Date registered) {
+    public void setRegistered( Date registered ) {
         this.registered = registered;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled( boolean enabled ) {
         this.enabled = enabled;
     }
 
@@ -61,7 +65,7 @@ public class User extends AbstractNamedEntity {
         return caloriesPerDay;
     }
 
-    public void setCaloriesPerDay(int caloriesPerDay) {
+    public void setCaloriesPerDay( int caloriesPerDay ) {
         this.caloriesPerDay = caloriesPerDay;
     }
 
