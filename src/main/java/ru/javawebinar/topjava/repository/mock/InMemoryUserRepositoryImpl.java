@@ -12,7 +12,9 @@ import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryUserRepositoryImpl implements UserRepository {
+
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
+
     private AtomicInteger counter = new AtomicInteger( 0 );
 
     {
@@ -46,7 +48,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Collection<User> getAll() {
+    public List<User> getAll() {
         return repository.values().stream().sorted().collect( Collectors.toList() );
     }
 }

@@ -9,10 +9,10 @@ import java.time.Month;
 import java.util.*;
 
 public class UserMealMapUtil {
-    public static final Map<User, Collection<Meal>> usersMealsMap;
+    public static final Map<User, List<Meal>> usersMealsMap;
 
     static {
-        Map<User, Collection<Meal>> usersMealsMapInit = new HashMap<>();
+        Map<User, List<Meal>> usersMealsMapInit = new HashMap<>();
         usersMealsMapInit.put( new User( "User10", "user10@topjaca.ru", "pass10", Role.ROLE_USER ),
                 Arrays.asList(
                         new Meal( LocalDateTime.of( 2015, Month.MAY, 30, 10, 0 ), "Завтрак", 500 ),

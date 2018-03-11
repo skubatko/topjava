@@ -12,6 +12,14 @@
             </bean>
     -->
 
+<!--
+            <bean class="ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl" id="inMemoryMealRepositoryImpl"/>
+
+            <bean class="ru.javawebinar.topjava.service.MealServiceImpl">
+                <constructor-arg name="repository" ref="inMemoryMealRepositoryImpl"/>
+            </bean>
+-->
+
     <!-- Not necessary, already included with component-scan -->
     <!--<context:annotation-config/>-->
 

@@ -7,11 +7,10 @@ import java.util.Collection;
 import java.util.List;
 
 public interface UserMealMapRepository {
-    User save( User user, Collection<Meal> meals );
+    List<Meal> save( User user, List<Meal> meals );
 
-    // false if not found
-    boolean delete( User user, Meal meal );
+    void delete( User user, List<Meal> meal );
 
     // null if not found
-    Collection<Meal> getMealsbyUser( User user );
+    List<Meal> getMealsbyUser( User user );
 }

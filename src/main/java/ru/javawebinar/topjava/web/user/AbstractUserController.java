@@ -17,11 +17,6 @@ public abstract class AbstractUserController {
     @Autowired
     private UserService service;
 
-    public List<User> getAll() {
-        log.info("getAll");
-        return service.getAll();
-    }
-
     public User get(int id) {
         log.info("get {}", id);
         return service.get(id);
@@ -48,4 +43,10 @@ public abstract class AbstractUserController {
         log.info("getByEmail {}", email);
         return service.getByEmail(email);
     }
+
+    public List<User> getAll() {
+        log.info("getAll");
+        return service.getAll();
+    }
+
 }
