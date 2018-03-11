@@ -10,8 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static jdk.nashorn.internal.objects.NativeArray.sort;
-
 @Repository
 public class InMemoryUserRepositoryImpl implements UserRepository {
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
