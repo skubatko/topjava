@@ -1,14 +1,15 @@
 package ru.javawebinar.topjava;
 
-import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
+import ru.javawebinar.topjava.model.User;
 
-public class AuthorizedUser {
+public class AuthorizedUser extends User {
+
+    public AuthorizedUser( Integer id, String name ) {
+        super( id, name );
+    }
 
     public static int id() {
         return 1;
     }
 
-    public static int getCaloriesPerDay() {
-        return DEFAULT_CALORIES_PER_DAY;
-    }
 }

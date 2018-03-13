@@ -20,6 +20,7 @@ public class MealServiceImpl implements MealService {
     public MealServiceImpl( MealRepository repository ) {
         this.repository = repository;
     }
+
     @Override
     public Meal create( Meal meal) {
         return repository.save(meal);

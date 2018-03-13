@@ -6,38 +6,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.service.UserMealMapService;
+import ru.javawebinar.topjava.service.MealService;
 
 import java.util.List;
-
-import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
-import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 
 @Controller
 public class MealRestController {
     protected final Logger log = LoggerFactory.getLogger( getClass() );
 
     @Autowired
-    private UserMealMapService service;
+    private MealService service;
 
-    public List<Meal> get( User user ) {
-        log.info( "get meals by user:{}", user );
-        return service.getMealsbyUser( user );
+    public Meal get( int id ) {
+        log.info( "get meals:{}", id );
+        return service.get( id );
     }
 
-    public List<Meal> create( User user, List<Meal> meals ) {
-        log.info( "create meals:{} at user:{}", meals, user );
-        return service.create( user, meals );
+    public Meal create( Meal meal ) {
+        log.info( "create meal:{}", meal );
+        return service.create( meal );
     }
 
-    public void delete( User user, List<Meal> meals ) {
-        log.info( "delete user:{} meals:{}", user, meals );
-        service.delete( user, meals );
+    public void delete( int id ) {
+        log.info( "delete meal:{}", id );
+        service.delete( id );
     }
 
-    public void update( User user, List<Meal> meals ) {
-        log.info( "update user:{} with meals:{}", user, meals );
-        service.update( user, meals );
+    public void update( Meal meal ) {
+        log.info( "update meal:{}", meal );
+        service.update( meal );
     }
 
 }

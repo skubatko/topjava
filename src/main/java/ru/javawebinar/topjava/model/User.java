@@ -1,12 +1,10 @@
 package ru.javawebinar.topjava.model;
 
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
 
-public class User extends AbstractNamedEntity {
+public class User extends AbstractNamedEntity implements Comparable {
 
     private String email;
 
@@ -18,22 +16,33 @@ public class User extends AbstractNamedEntity {
 
     private Set<Role> roles;
 
+    private List<Integer> meals = new Vector<>();
+
     private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
 
+    public User( Integer id, String name ) {
+        super( id, name );
+    }
+
     public User( String name, String email, String password, Role role, Role... roles ) {
-        this( null, name, email, password, DEFAULT_CALORIES_PER_DAY, true, EnumSet.of( role, roles ) );
+        this( null, name, email, password, DEFAULT_CALORIES_PER_DAY, true, null, EnumSet.of( role, roles ) );
+    }
+
+    public User( String name, String email, String password, List<Integer> meals, Role role, Role... roles ) {
+        this( null, name, email, password, DEFAULT_CALORIES_PER_DAY, true, meals, EnumSet.of( role, roles ) );
     }
 
     public User( Integer id, String name, String email, String password, Role role, Role... roles ) {
-        this( id, name, email, password, DEFAULT_CALORIES_PER_DAY, true, EnumSet.of( role, roles ) );
+        this( id, name, email, password, DEFAULT_CALORIES_PER_DAY, true, null, EnumSet.of( role, roles ) );
     }
 
-    public User( Integer id, String name, String email, String password, int caloriesPerDay, boolean enabled, Set<Role> roles ) {
+    public User( Integer id, String name, String email, String password, int caloriesPerDay, boolean enabled, List<Integer> meals, Set<Role> roles ) {
         super( id, name );
         this.email = email;
         this.password = password;
         this.caloriesPerDay = caloriesPerDay;
         this.enabled = enabled;
+        this.meals = meals;
         this.roles = roles;
     }
 
@@ -73,6 +82,14 @@ public class User extends AbstractNamedEntity {
         return enabled;
     }
 
+    public List<Integer> getMeals() {
+        return meals;
+    }
+
+    public void addMeal( int mealId ) {
+        meals.add( mealId );
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -88,8 +105,16 @@ public class User extends AbstractNamedEntity {
                 ", email=" + email +
                 ", name=" + name +
                 ", enabled=" + enabled +
+                ", meals=" + meals +
                 ", roles=" + roles +
                 ", caloriesPerDay=" + caloriesPerDay +
                 ')';
     }
+
+    @Override
+    public int compareTo( Object o ) {
+        User user = (User) o;
+        return this.name.compareTo( user.getName() );
+    }
+
 }

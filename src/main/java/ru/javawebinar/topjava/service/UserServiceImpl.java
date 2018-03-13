@@ -27,6 +27,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void update(User user) {
+        checkNotFoundWithId(repository.save(user), user.getId());
+    }
+
+    @Override
     public void delete(int id) throws NotFoundException {
         checkNotFoundWithId(repository.delete(id), id);
     }
@@ -44,10 +49,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return repository.getAll();
-    }
-
-    @Override
-    public void update(User user) {
-        checkNotFoundWithId(repository.save(user), user.getId());
     }
 }

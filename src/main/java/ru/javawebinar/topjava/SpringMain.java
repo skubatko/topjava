@@ -2,16 +2,12 @@ package ru.javawebinar.topjava;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.util.UserMealMapUtil;
-import ru.javawebinar.topjava.web.meal.MealRestController;
+import ru.javawebinar.topjava.repository.mock.InMemoryUserRepositoryImpl;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 public class SpringMain {
     public static void main( String[] args ) {
@@ -21,11 +17,8 @@ public class SpringMain {
 
             AdminRestController adminUserController = appCtx.getBean( AdminRestController.class );
             adminUserController.create( new User( null, "userName", "email", "password", Role.ROLE_ADMIN ) );
+            adminUserController.getAll().forEach( System.out::println );
 
-            MealRestController mealRestController = appCtx.getBean( MealRestController.class );
-            for ( Map.Entry<User, List<Meal>> entry : UserMealMapUtil.usersMealsMap.entrySet() ) {
-                mealRestController.create( entry.getKey(), entry.getValue() );
-            }
         }
     }
 }
