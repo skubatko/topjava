@@ -37,4 +37,9 @@ public class MealRestController {
         service.update( meal );
     }
 
+    public List<Meal> getAll() {
+        log.info( "getAll meal" );
+        return service.getAll();
+    }
+
 }

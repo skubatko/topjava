@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Meal extends AbstractNamedEntity {
-    private Integer id;
 
     private final LocalDateTime dateTime;
 
