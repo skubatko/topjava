@@ -2,12 +2,13 @@ package ru.javawebinar.topjava.model;
 
 import ru.javawebinar.topjava.model.AbstractNamedEntity;
 import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class Meal extends AbstractNamedEntity {
+public class Meal extends AbstractNamedEntity implements Comparable {
 
     private final LocalDateTime dateTime;
 
@@ -64,4 +65,11 @@ public class Meal extends AbstractNamedEntity {
                 ", calories=" + calories +
                 '}';
     }
+
+    @Override
+    public int compareTo( Object o ) {
+        Meal meal = (Meal) o;
+        return meal.getTime().compareTo( this.getTime() );
+    }
+
 }

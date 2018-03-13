@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.model;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
 
@@ -16,7 +17,7 @@ public class User extends AbstractNamedEntity implements Comparable {
 
     private Set<Role> roles;
 
-    private List<Integer> meals = new Vector<>();
+    private List<Integer> meals = new ArrayList<>();
 
     private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
 
@@ -86,8 +87,8 @@ public class User extends AbstractNamedEntity implements Comparable {
         return meals;
     }
 
-    public void addMeal( int mealId ) {
-        meals.add( mealId );
+    public boolean addMeal( int mealId ) {
+        return meals.add( mealId );
     }
 
     public Set<Role> getRoles() {

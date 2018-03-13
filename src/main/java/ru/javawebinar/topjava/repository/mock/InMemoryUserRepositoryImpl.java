@@ -48,6 +48,17 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public List<Integer> getMeals( int id ) {
+        return repository.get( id ).getMeals();
+    }
+
+    @Override
+    public User addMeal( int id, int mealId ) {
+        repository.get( id ).addMeal( mealId );
+        return repository.get( id );
+    }
+
+    @Override
     public List<User> getAll() {
         return repository.values().stream().sorted().collect( Collectors.toList() );
     }

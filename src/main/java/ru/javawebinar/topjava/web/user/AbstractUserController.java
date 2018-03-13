@@ -7,6 +7,7 @@ import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 
 import java.util.List;
+import java.util.Set;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
@@ -42,6 +43,14 @@ public abstract class AbstractUserController {
     public User getByMail(String email) {
         log.info("getByEmail {}", email);
         return service.getByEmail(email);
+    }
+
+    public List<Integer> getMeals( int userId ) {
+        return service.get( userId ).getMeals();
+    }
+
+    public void addMeal( int userId, int mealId ) {
+        service.get( userId ).addMeal( mealId );
     }
 
     public List<User> getAll() {

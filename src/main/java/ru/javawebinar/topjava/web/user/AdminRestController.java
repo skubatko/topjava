@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class AdminRestController extends AbstractUserController {
@@ -31,6 +32,16 @@ public class AdminRestController extends AbstractUserController {
     @Override
     public User getByMail(String email) {
         return super.getByMail(email);
+    }
+
+    @Override
+    public List<Integer> getMeals( int userId ) {
+        return super.getMeals( userId );
+    }
+
+    @Override
+    public void addMeal( int userId, int mealId ) {
+        super.addMeal( userId, mealId );
     }
 
     @Override
