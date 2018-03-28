@@ -1,30 +1,58 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@NamedQueries( {
+        @NamedQuery( name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=:id AND m.user_id=:user_id" ),
+        @NamedQuery( name = Meal.BETWEEN, query = "SELECT m FROM Meal m WHERE m.user_id=?1 AND m.date_time BETWEEN ?2 AND ?3 ORDER BY m.date_time DESC" ),
+        @NamedQuery( name = Meal.ALL, query = "SELECT m FROM Meal m WHERE m.user_id=:user_id ORDER BY m.date_time DESC" )
+} )
+@Entity
+@Table( name = "meals", uniqueConstraints = { @UniqueConstraint( columnNames = "user_id, date_time", name = "meals_unique_user_datetime_idx" ) } )
 public class Meal extends AbstractBaseEntity {
+
+    public static final String DELETE = "Meal.delete";
+    public static final String BETWEEN = "Meal.getBetween";
+    public static final String ALL = "Meal.getAll";
+
+    @Column( name = "date_time", nullable = false )
+    @NotNull
     private LocalDateTime dateTime;
 
+    @Column( name = "description", nullable = false )
+    @NotBlank
+    @Size( max = 100 )
     private String description;
 
+    @Column( name = "calories", nullable = false )
+    @Range( min = 10, max = 10000 )
     private int calories;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne( fetch = FetchType.LAZY )
     private User user;
 
     public Meal() {
     }
 
-    public Meal(LocalDateTime dateTime, String description, int calories) {
-        this(null, dateTime, description, calories);
+    public Meal( Meal m ) {
+        this( m.getId(), m.getDateTime(), m.getDescription(), m.getCalories() );
     }
 
-    public Meal(Integer id, LocalDateTime dateTime, String description, int calories) {
-        super(id);
+    public Meal( LocalDateTime dateTime, String description, int calories ) {
+        this( null, dateTime, description, calories );
+    }
+
+    public Meal( Integer id, LocalDateTime dateTime, String description, int calories ) {
+        super( id );
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
@@ -50,15 +78,15 @@ public class Meal extends AbstractBaseEntity {
         return dateTime.toLocalTime();
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime( LocalDateTime dateTime ) {
         this.dateTime = dateTime;
     }
 
-    public void setDescription(String description) {
+    public void setDescription( String description ) {
         this.description = description;
     }
 
-    public void setCalories(int calories) {
+    public void setCalories( int calories ) {
         this.calories = calories;
     }
 
@@ -66,7 +94,7 @@ public class Meal extends AbstractBaseEntity {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser( User user ) {
         this.user = user;
     }
 
