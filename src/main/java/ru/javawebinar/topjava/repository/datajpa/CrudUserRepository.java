@@ -11,23 +11,23 @@ import ru.javawebinar.topjava.model.User;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional(readOnly = true)
+@Transactional( readOnly = true )
 public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying
 //    @Query(name = User.DELETE)
-    @Query("DELETE FROM User u WHERE u.id=:id")
-    int delete(@Param("id") int id);
+    @Query( "DELETE FROM User u WHERE u.id=:id" )
+    int delete( @Param( "id" ) int id );
 
     @Override
     @Transactional
-    User save(User user);
+    User save( User user );
 
     @Override
-    Optional<User> findById(Integer id);
+    Optional<User> findById( Integer id );
 
     @Override
-    List<User> findAll(Sort sort);
+    List<User> findAll( Sort sort );
 
-    User getByEmail(String email);
+    User getByEmail( String email );
 }
